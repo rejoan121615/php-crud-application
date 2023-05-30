@@ -1,9 +1,21 @@
 <?php 
-  require_once("database.php");
+// require database file 
+  require_once("./database/database.php");
+  require_once('./models/UserModel.php');
 
-  // if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])) {
+  // check form 
+  if (isset($_POST['submit'])) {
+    // validate data 
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    // sanitize user data 
     
-  // }
+    $registerUser = new User($name, $email, $password, $connection);
+    print_r($registerUser->GetFilteredData());
+    
+  }
+
 
 ?>
 
@@ -21,7 +33,8 @@
     <section class=" w-75 ">
       <div class="container">
       <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-        <div class="mb-3">
+      <h1 class=" text-center ">Welcome, registration here</h1>
+        <div class="mb-3 mt-5 ">
           <label for="name" class="form-label">Name</label>
           <input type="text" class="form-control" id="name" name="name">
         </div>
@@ -34,7 +47,7 @@
           <input type="password" class="form-control" id="password" name="password">
         </div>
         <div class=" mt-4">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary" name="submit">Submit</button>
         </div>
       </form>
       </div>
