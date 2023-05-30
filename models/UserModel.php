@@ -34,23 +34,49 @@ private function StoreUser () {
     //  hash user password
     $hashPass = password_hash($this->purifyedData['password'], PASSWORD_DEFAULT);
     // store data 
-    $queryData = $this->db->query('');
+    $tableQuery = 'SHOW TABLES LIKE \'users\'';
+    $tableQueryResult = $this->db->query($tableQuery);
+    $userDataQuery = "INSERT INTO `users` (`name`, `email`, `password`) VALUES ('{$this->purifyedData['name']}', '{$this->purifyedData['email']}', '{$hashPass}');";
+    // if table exists then push data or create one and then push
+    if ($tableQueryResult->num_rows) {
+      $this->db->query($userDataQuery);
+    } else {
+      $newTableQuery = 'CREATE TABLE IF NOT EXISTS users (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(40) NOT NULL,
+      email VARCHAR(100) NOT NULL,
+      password VARCHAR(255) NOT NULL
+    )';
+      $this->db->query($newTableQuery);
+      $this->db->query($userDataQuery);
+    }
   }
   // store data into database 
   public function CreateAccount () {
-
-    $db = $this->db;
     // select database if not available then create one 
-    try {
-        if ($db->select_db('blog')) {
-            echo 'do something';
-            $this->StoreUser();
-        }
-    } catch (Exception $e) {
-        //create a database if not exits
-        $db->query('CREATE DATABASE blog');
-        $this->StoreUser();
+    $this->db->select_db('blog');
+    // sanitize and store data 
+    $this->SanitizeData();     
+    //  hash user password
+    $hashPass = password_hash($this->purifyedData['password'], PASSWORD_DEFAULT);
+    // store data 
+    $tableQuery = 'SHOW TABLES LIKE \'users\'';
+    $tableQueryResult = $this->db->query($tableQuery);
+    $userDataQuery = "INSERT INTO `users` (`name`, `email`, `password`) VALUES ('{$this->purifyedData['name']}', '{$this->purifyedData['email']}', '{$hashPass}');";
+    // if table exists then push data or create one and then push
+    if ($tableQueryResult->num_rows) {
+      $this->db->query($userDataQuery);
+    } else {
+      $newTableQuery = 'CREATE TABLE IF NOT EXISTS users (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(40) NOT NULL,
+      email VARCHAR(100) NOT NULL,
+      password VARCHAR(255) NOT NULL
+    )';
+      $this->db->query($newTableQuery);
+      $this->db->query($userDataQuery);
     }
+    
   }
 
   // ------------------------ return santizied data 
