@@ -5,7 +5,7 @@ class User {
   private $purifyedData = [];
   private $db;
 
-  // constructor 
+  // ------------------ constructor 
   public function __construct($name, $email, $password, $db) {
     $this->userData['name'] = $name;
     $this->userData['email'] = $email;
@@ -13,7 +13,7 @@ class User {
     $this->db = $db;
   }
 
-  // sanitize user data 
+  // ------------------ sanitize user data 
   private function SanitizeData () {
     $temp_data_list = [];
     // tag sanitization
@@ -27,13 +27,38 @@ class User {
     return $this->purifyedData;
   }
 
-  // return santizied data 
+//  --------------------- store user data into database
+private function StoreUser () {
+    // sanitize and store data 
+    $this->SanitizeData();     
+    //  hash user password
+    $hashPass = password_hash($this->purifyedData['password'], PASSWORD_DEFAULT);
+    // store data 
+    $queryData = $this->db->query('');
+  }
+  // store data into database 
+  public function CreateAccount () {
+
+    $db = $this->db;
+    // select database if not available then create one 
+    try {
+        if ($db->select_db('blog')) {
+            echo 'do something';
+            $this->StoreUser();
+        }
+    } catch (Exception $e) {
+        //create a database if not exits
+        $db->query('CREATE DATABASE blog');
+        $this->StoreUser();
+    }
+  }
+
+  // ------------------------ return santizied data 
   public function GetFilteredData () {
     $this->SanitizeData();
     return $this->purifyedData;
   }
+
   
 }
 
-
-?>

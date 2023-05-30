@@ -12,7 +12,8 @@
     // sanitize user data 
     
     $registerUser = new User($name, $email, $password, $connection);
-    print_r($registerUser->GetFilteredData());
+    // print_r($registerUser->GetFilteredData());
+    $registerUser->CreateAccount();
     
   }
 
