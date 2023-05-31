@@ -57,6 +57,10 @@
   <body style="height: 100vh" class=" w-100 d-flex flex-column justify-content-center align-items-center ">
     <section class=" w-75 ">
       <div class="container">
+          <div class="btn-group w-100 mb-5 " role="group" >
+              <a class="btn btn-outline-primary " href="create-account.php">Create New Account</a>
+              <a class="btn btn-outline-success " href="log-in.php">Log-in</a>
+          </div>
       <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
       <h1 class=" text-center ">Welcome, registration here</h1>
         <div class="mb-3 mt-5 ">
