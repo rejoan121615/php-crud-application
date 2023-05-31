@@ -22,8 +22,6 @@
       function CheckValidation ($val, $field) {
           global $inputValidation;
 		  if (empty($val)) {
-			  $inputValidation[$field] = false;
-		  } else {
 			  $inputValidation[$field] = true;
 		  }
       }
@@ -34,9 +32,7 @@
       CheckValidation($password, 'password');
 
 //    if all field validate then run this code
-
-      if (in_array(true, $inputValidation)) {
-      // sanitize user data
+      if (!$inputValidation['name'] && !$inputValidation['password'] && !$inputValidation['email']) {
           $registerUser = new User($name, $email, $password, $connection);
           $registerUser->CreateAccount();
       }
@@ -65,18 +61,18 @@
       <h1 class=" text-center ">Welcome, registration here</h1>
         <div class="mb-3 mt-5 ">
           <label for="name" class="form-label">Name</label>
-          <input value="<?php echo isset($name) ? $name : "" ?>" type="text" class="form-control <?php echo $inputValidation['name'] ?  '' : 'is-invalid' ?> " id="name" name="name">
-            <?php echo $inputValidation['name'] ?  '' : '<div class="invalid-feedback">Your name please.</div>' ?>
+          <input value="<?php echo isset($name) ? $name : "" ?>" type="text" class="form-control <?php echo $inputValidation['name'] ?  'is-invalid' : '' ?> " id="name" name="name">
+            <?php echo $inputValidation['name'] ? '<div class="invalid-feedback">Your name please.</div>' : '' ?>
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">Email address:</label>
-          <input value="<?php echo isset($email) ? $email : "" ?>" type="email" class="form-control <?php echo $inputValidation['email'] ? '' : 'is-invalid' ?> " id="email" name="email">
-            <?php echo $inputValidation['name'] ?  '' : '<div class="invalid-feedback">Your email please.</div>' ?>
+          <input value="<?php echo isset($email) ? $email : "" ?>" type="email" class="form-control <?php echo $inputValidation['email'] ? 'is-invalid' : '' ?> " id="email" name="email">
+            <?php echo $inputValidation['name'] ? '<div class="invalid-feedback">Your email please.</div>' : '' ?>
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
-          <input value="<?php echo isset($password) ? $password : "" ?>" type="password" class="form-control <?php echo $inputValidation['password'] ? '' : 'is-invalid' ?> " id="password" name="password">
-            <?php echo $inputValidation['password'] ?  '' : '<div class="invalid-feedback">Your password please.</div>' ?>
+          <input value="<?php echo isset($password) ? $password : "" ?>" type="password" class="form-control <?php echo $inputValidation['password'] ? 'is-invalid' : '' ?> " id="password" name="password">
+            <?php echo $inputValidation['password'] ? '<div class="invalid-feedback">Your password please.</div>' : '' ?>
         </div>
         <div class=" mt-4">
           <button type="submit" class="btn btn-primary" name="submit">Submit</button>
