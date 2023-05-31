@@ -17,26 +17,30 @@
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    //    validation checking methos
+    //    need to ask to teacher
       function CheckValidation ($val, $field) {
+          global $inputValidation;
 		  if (empty($val)) {
-			  $inputValidation[`{$field}`] = false;
+			  $inputValidation[$field] = false;
 		  } else {
-			  $inputValidation[`{$field}`] = true;
+			  $inputValidation[$field] = true;
 		  }
       }
+
+
 //    check validation for all field
       CheckValidation($name, 'name');
 	  CheckValidation($email, 'email');
       CheckValidation($password, 'password');
 
+//    if all field validate then run this code
 
 
     // sanitize user data 
     
-    $registerUser = new User($name, $email, $password, $connection);
+//    $registerUser = new User($name, $email, $password, $connection);
     // print_r($registerUser->GetFilteredData());
-    $registerUser->CreateAccount();
+//    $registerUser->CreateAccount();
     
   }
 
