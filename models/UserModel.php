@@ -28,29 +28,7 @@ class User {
   }
 
 //  --------------------- store user data into database
-private function StoreUser () {
-    // sanitize and store data 
-    $this->SanitizeData();     
-    //  hash user password
-    $hashPass = password_hash($this->purifyedData['password'], PASSWORD_DEFAULT);
-    // store data 
-    $tableQuery = 'SHOW TABLES LIKE \'users\'';
-    $tableQueryResult = $this->db->query($tableQuery);
-    $userDataQuery = "INSERT INTO `users` (`name`, `email`, `password`) VALUES ('{$this->purifyedData['name']}', '{$this->purifyedData['email']}', '{$hashPass}');";
-    // if table exists then push data or create one and then push
-    if ($tableQueryResult->num_rows) {
-      $this->db->query($userDataQuery);
-    } else {
-      $newTableQuery = 'CREATE TABLE IF NOT EXISTS users (
-      id INT AUTO_INCREMENT PRIMARY KEY,
-      name VARCHAR(40) NOT NULL,
-      email VARCHAR(100) NOT NULL,
-      password VARCHAR(255) NOT NULL
-    )';
-      $this->db->query($newTableQuery);
-      $this->db->query($userDataQuery);
-    }
-  }
+
   // store data into database 
   public function CreateAccount () {
     // select database if not available then create one 

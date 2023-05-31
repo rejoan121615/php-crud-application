@@ -3,12 +3,35 @@
   require_once("./database/database.php");
   require_once('./models/UserModel.php');
 
+//  form validation store
+	$inputValidation = [
+		"name" => false,
+		"email" => false,
+		"password" => false
+	];
+
   // check form 
   if (isset($_POST['submit'])) {
     // validate data 
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+
+    //    validation checking methos
+      function CheckValidation ($val, $field) {
+		  if (empty($val)) {
+			  $inputValidation[`{$field}`] = false;
+		  } else {
+			  $inputValidation[`{$field}`] = true;
+		  }
+      }
+//    check validation for all field
+      CheckValidation($name, 'name');
+	  CheckValidation($email, 'email');
+      CheckValidation($password, 'password');
+
+
+
     // sanitize user data 
     
     $registerUser = new User($name, $email, $password, $connection);
