@@ -30,10 +30,9 @@
 
 //    if all field validate then run this code
 		if (!$inputValidation['password'] && !$inputValidation['email']) {
-//			$registerUser = new User($name, $email, $password, $connection);
-//			$registerUser->CreateAccount();
+			$registerUser = new User("", $email, $password, $connection);
+			$registerUser->LogIn();
 		}
-
 
 
 	}

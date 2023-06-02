@@ -58,9 +58,11 @@ class User {
   }
 
   // ------------------------ return santizied data 
-  public function GetFilteredData () {
-    $this->SanitizeData();
-    return $this->purifyedData;
+  public function LogIn () {
+	  $db = $this->db;
+	  $queryResult = $db->query('SELECT * FROM `users`');
+    echo 'logged in me';
+	print_r($queryResult);
   }
 
   
